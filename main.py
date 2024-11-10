@@ -40,3 +40,16 @@ class Membership:
     # print('-'*50)
     # for row in range(len(self.list_benefit)):
     #   print(self.list_benefit[row])
+
+  def show_requirements(self):
+    """ 
+    Fungsi ini untuk show all requirements membership
+    """
+
+    print("Requirements Membership PacCommers\n")
+    print(tabulate(self.requirements,headers='keys',stralign='center'))
+
+    # print(f'{self.headers}')
+    # print('-'*50)
+    # for row in range(len(self.requirement_membership)):
+  
