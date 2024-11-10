@@ -52,4 +52,35 @@ class Membership:
     # print(f'{self.headers}')
     # print('-'*50)
     # for row in range(len(self.requirement_membership)):
+
+  def predict_membership(self,username,monthly_expense,monthly_income):
+    """
+    Fungsi ini untuk memprediksi user akan masuk ke dalam membership mana 
+    berdasarkan input parameter dan parameter masing - masing membership
+    """
+    res = []
+    membership_parameter = [[8, 15], [6, 10], [5, 7]]
+
+    #for index, _ in enumerate(membership_parameter):
+    # enumerate(membership_parameter) menghasilkan pasangan (index, value) untuk setiap elemen dalam membership_parameter.
+    # index adalah indeks atau posisi elemen dalam daftar, mulai dari 0.
+    # value adalah nilai dari elemen di posisi tersebut, yaitu sub-daftar dua elemen dalam membership_parameter.
+    # _ digunakan sebagai penanda variabel yang tidak dipakai. Ini berarti kita hanya membutuhkan index dari setiap elemen dan mengabaikan value. 
+    for index,_ in enumerate(membership_parameter):
+      tmp = round(sqrt( (monthly_expense-membership_parameter[index][0])**2 + (monthly_income-membership_parameter[index][1])**2 ))
+
+      res.append(tmp)
+    
+    res_dict = {
+        "Platinum": res[0],
+        "Gold": res[1],
+        "Silver": res[2]
+
+    }
+
+    print(f"Hasil perhitungan Euclidean Distance dari user {self.username} adalah {res_dict}")
+    for member, distance in res_dict.items():
+                if distance == min(res):
+                    self.user_data[username] = member
+                    return member
   
