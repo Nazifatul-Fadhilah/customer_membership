@@ -9,7 +9,7 @@ class Membership:
       "Cahya": "Platinum"
   }
 # data membership
-  membership = {
+  membership_benefit = {
       'Membership': ['Platinum','Gold','Silver'],
       'Discount' : ['15%','10%','8%'],
       'Another Benefit' : ["Benefit Gold + Silver + Cashback max. 30%","Benefit Silver + Voucher Ojek Online","Voucher Makanan"]
@@ -34,7 +34,7 @@ class Membership:
     """
 
     print(f"Benefit Membership PacCommerce\n")
-    print(tabulate(self.membership,headers='keys',stralign='center'))
+    print(tabulate(self.membership_benefit,headers='keys',stralign='center'))
 
     # print(f"{self.headers}")
     # print('-'*50)
@@ -83,4 +83,27 @@ class Membership:
                 if distance == min(res):
                     self.user_data[username] = member
                     return member
+                
+  def calculate_price(self,username,list_harga_barang):
+    """
+    Fungsi ini untuk menghitung final price yang harus dibayarkan, 
+    terus akan mendapatkan diskon sesuai dengan ketentuan membership
+    """
+    total_barang = sum(list_harga_barang)
+    discount = [float(row.strip('%'))/100 for row in self.membership_benefit['Discount']]
+    
+    try:
+        if username in self.user_data.keys():
+            membership = self.user_data.get(username)
+            if membership in self.membership_benefit['Membership']:
+                idx_member = self.membership_benefit['Membership'].index(membership)
+                diskon = discount[idx_member] * total_barang
+                final_price = total_barang - diskon
+            print(f"Harga yang harus dibayar Rp. {final_price:,}")
+            
+            # return final_price
+        else:
+            raise Exception("User tidak ditemukan dalam database")
+    except:
+            raise Exception("Invalid process")
   
